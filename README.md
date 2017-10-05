@@ -1,5 +1,6 @@
 # POSD2017F Homework
 
+<<<<<<< HEAD
 ## Homework assignment 2
 
 Please use [the files that were used in course](https://github.com/yccheng66/posd2017f) and copy test header to your repository from this project. 
@@ -61,3 +62,30 @@ Fri Oct 6 2017 23:59:59
  * Clean all HW1 related files (Media.h, Shapes.h, Sort.h...and its implementation).
  * ~~The header's first letter should be capitalized so that we can caugth your header file on CI.~~
  * If you had any suggestions in HW1, improve it.
+=======
+## Homework assignment 1
+
+Make the unit tests given (Sort.h, utSort.h) to you pass.
+
+#### Update
+9/19 Update define of compactness in Sort.h.
+
+#### Assignment requirement
+
+ 1. Implement Sort.h.
+ 2. According to #1, write five unit tests in utSort.h.
+ 3. Write the corresponding makefile to generate executable file which named `hw1`.
+
+#### Marks
+
+Each test is 10 points, total is 50 points.
+
+#### Deadline
+
+Thurs Sep 21 2017 23:59:59
+
+#### Note
+
+Make sure your job on CI server is passed.
+# posdHW
+>>>>>>> 6609119d1eb49b377bcf20c9302cfb855cb8253a
