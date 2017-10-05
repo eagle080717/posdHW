@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 #INC_DIR = include
 
 all: utAtom utVariable hw2
@@ -35,32 +33,7 @@ main.o:	number.h utTerm.h main.cpp
 
 clean:
 ifeq (${OS}, Windows_NT)
-	del *.o *.exe utAtom utVariable hw2
+	del *.o *.exe utAtom utVariable
 else
 	rm -f *.o utAtom utVariable hw2
-=======
-INC_DIR = include
-
-all: hw1
-
-hw1: main.o Shapes.o Media.o
-ifeq (${OS}, Windows_NT)
-	g++ -o hw1 main.o Shapes.o Media.o -lgtest
-else
-	g++ -o hw1 main.o Shapes.o Media.o -lgtest -lpthread
-endif
-
-main.o: main.cpp utSort.h $(INC_DIR)/Sort.h
-	g++ -std=gnu++0x -c main.cpp
-Shapes.o: $(INC_DIR)/Shapes.h Shapes.cpp
-	g++ -std=gnu++0x -c Shapes.cpp
-Media.o: $(INC_DIR)/Media.h $(INC_DIR)/Shapes.h Media.cpp
-	g++ -std=gnu++0x -c Media.cpp
-
-clean:
-ifeq (${OS}, Windows_NT)
-	del *.o *.exe
-else
-	rm -f *.o hw1
->>>>>>> 6609119d1eb49b377bcf20c9302cfb855cb8253a
 endif
