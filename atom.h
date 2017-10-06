@@ -12,14 +12,25 @@ public:
 	  string _symbol;
 	  string symbol(){ return _symbol; }
 	  string value(){ return _value; }
-	  bool matchFunc(Atom atom){
-	      return atom._symbol == _symbol;
-	  }
-	  bool match(Atom atom){
-	      return matchFunc(atom);
-	  }
-private:
-	string _value;
+
+	  bool match(Atom at=NULL, Number n=NULL, Variable v=NULL){
+	    if(n != NULL)
+	      return false;
+
+	    else if(v != NULL)
+	      if(_assignable){
+	        _value = v.symbol();
+	        _assignable = false;
+	      }
+	      return v.symbol() == _value;
+
+	    else
+	      return at.symbol() == _symbol;
+
+  	  }
+private:1`
+	string _value = NULL;
+	bool _assignable = true;
 };
 
 #endif
