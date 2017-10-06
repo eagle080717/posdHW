@@ -2,9 +2,12 @@
 #define NUMBER_H
 
 #include <string>
-#include "atom.h"
+//#include "atom.h"
+//#include "variable.h"
 using namespace std;
 
+class Atom;
+class Variable;
 class Number{
 public:
   Number(int s):_symbol(to_string(s)){}
@@ -13,25 +16,33 @@ public:
   string symbol(){ return _symbol; }
   string value(){ return _value; }
 
-  //template <class matchTmp> 
-  bool match(Atom at=NULL, Number n=NULL, Variable v=NULL){
-    if(at != NULL)
-      return false;
-
-    else if(v != NULL)
-      if(_assignable){
-        _value = v.symbol();
-        _assignable = false;
-      }
-      return v.symbol() == _value;
-
-    else
-      return n.symbol() == _symbol;
-    //return arg.symbol() == _value;
+  bool match(Atom &at){
+    return false;
   }
 
+  bool match(Number &n){
+    return n.symbol() == _symbol;
+  }
+
+  bool match(Variable &v){
+    if(_assignable){
+        if(!v._assignable){
+          return v.value() == _symbol;
+        } else {
+          v._value = _symbol;
+          v._assignable = false;
+          
+        
+          _value = v.symbol();
+          _assignable = false;
+        }
+      }
+    return v.symbol() == _value;
+  }
+
+
 private:
-  string _value = NULL;
+  string _value;
   bool _assignable = true;
 };
 
