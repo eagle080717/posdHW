@@ -42,7 +42,7 @@ public:
 
 
 private:
-  string _value = "0";
+  string _value = "1";
   bool _assignable = true;
 };
 

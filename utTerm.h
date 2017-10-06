@@ -10,7 +10,7 @@ TEST (Number, ctor) {
 	Number n(25);
 	//Variable X("X");
 	//n.match(X);
-	ASSERT_EQ("0", n.value());
+	ASSERT_EQ("1", n.value());
 }
 
 //test Number.symbol()
