@@ -8,9 +8,9 @@
 //test Number.value()
 TEST (Number, ctor) {
 	Number n(25);
-	Variable X("X");
-	n.match(X);
-	ASSERT_EQ("X", n.value());
+	//Variable X("X");
+	//n.match(X);
+	ASSERT_EQ("0", n.value());
 }
 
 //test Number.symbol()
