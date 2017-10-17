@@ -2,47 +2,44 @@
 #define NUMBER_H
 
 #include <string>
-//#include "atom.h"
-//#include "variable.h"
 using namespace std;
 
 class Atom;
 class Variable;
-class Number{
+class Number : public Term{
 public:
-  Number(int s):_symbol(to_string(s)){}
-  string const _symbol;
+  Number(double v):_value(to_string(v)){}
+  string const _value;
 
   string symbol(){ return _symbol; }
   string value(){ return _value; }
-
+/*
   bool match(Atom &at){
     return false;
   }
 
   bool match(Number &n){
-    return n.symbol() == _symbol;
+    return n.value() == _value;
+  }
+*/
+  bool match(Term &t){
+    return t.value() == _value;
   }
 
   bool match(Variable &v){
-    if(_assignable){
-        if(!v._assignable){
-          return v.value() == _symbol;
-        } else {
-          v._value = _symbol;
+    if(_assignable && v._assignable){
+          v._value = _value;
           v._assignable = false;
           
-        
-          _value = v.symbol();
-          _assignable = false;
-        }
+          _symbol = v.symbol();
+          _assignable = false;       
       }
-    return v.symbol() == _value;
+    return v.symbol() == _symbol;
   }
 
 
 private:
-  string _value = "1";
+  string _symbol;
   bool _assignable = true;
 };
 

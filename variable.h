@@ -8,7 +8,7 @@ using std::string;
 //class Atom;
 //class Number;
 
-class Variable{
+class Variable {
 public:
   Variable(string s):_symbol(s){}
   string const _symbol;
