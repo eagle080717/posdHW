@@ -32,7 +32,15 @@ public:
     }
     return t.symbol() == _value;
   }
-
+/*
+  bool match(Variable &v){
+    if(v._assignable){
+      _value = t.symbol();
+      _assignable = false;
+    }
+    return t.symbol() == _value;
+  }
+*/
   bool _assignable = true;
   string _value;
 //private:
