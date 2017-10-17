@@ -1,6 +1,6 @@
 #INC_DIR = include
 
-all: utAtom utVariable hw2
+all: utAtom utVariable hw3
 
 utAtom: mainAtom.o
 ifeq (${OS}, Windows_NT)
@@ -22,19 +22,19 @@ endif
 mainVariable.o: variable.h utVariable.h mainVariable.cpp
 	g++ -std=gnu++0x -c mainVariable.cpp
 
-hw2: main.o
+hw3: main.o
 ifeq (${OS}, Windows_NT)
-	g++ -o hw2 main.o -lgtest
+	g++ -o hw3 main.o -lgtest
 else
-	g++ -o hw2 main.o -lgtest -lpthread
+	g++ -o hw3 main.o -lgtest -lpthread
 endif
-main.o:	number.h utTerm.h main.cpp 
+main.o:	number.h utTerm.h utStruct.h main.cpp 
 	g++ -std=gnu++0x -c main.cpp
 
 
 clean:
 ifeq (${OS}, Windows_NT)
-	del *.o *.exe utAtom utVariable hw2
+	del *.o *.exe utAtom utVariable hw3
 else
-	rm -f *.o utAtom utVariable hw2
+	rm -f *.o utAtom utVariable hw3
 endif
