@@ -6,8 +6,10 @@ using std::string;
 
 class Term{
 public:
-  virtual string symbol() const= 0;
-  virtual string value() const{
+  virtual const string symbol() = 0;
+  //virtual const string value() = 0;
+  //virtual bool match(Term &term) = 0;
+  virtual const string value() {
     return symbol();
   }
   virtual bool match(Term &term) {

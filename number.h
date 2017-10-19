@@ -6,13 +6,16 @@
 #include <string>
 using namespace std;
 
-//class Atom;
-//class Variable;
 class Number : public Term{
 public:
-  Number(double v):_value(to_string(v)){}
-  string symbol(){ return _value; }
-  string value(){ return _value; }
+  Number(double v):_value(to_string(v)){ 
+    _value.erase(_value.find_last_not_of('0')+1, string::npos);
+    int last = _value.length() - 1;
+    if(_value[last] == '.')
+      _value.pop_back();
+  }
+  string const symbol(){ return _value; }
+  string const value(){ return _value; }
 
   bool match(Term &t){
     return t.value() == _value;
@@ -31,8 +34,8 @@ public:
 */
   
 private:
-  string _symbol;
-  string const _value;
+  //string _symbol;
+  string _value;
 };
 
 #endif

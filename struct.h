@@ -7,27 +7,28 @@
 
 using std::string;
 
-class Struct:public Term
+class Struct : public Term
 {
 public:
-  Struct(Atom const & name, std::vector<Term *> args):_name(name), _args(args) {
-  }
+  Struct(Atom name, std::vector<Term *> args):_name(name), _args(args) {}
 
   Term * args(int index) {
     return _args[index];
   }
 
-  Atom const & name() {
+  Atom name() {
     return _name;
   }
-  string symbol() const{
+
+  string const symbol(){
     string ret =_name.symbol() + "(";
     for(int i = 0; i < _args.size() - 1 ; i++){
-      ret += _args[i]-> symbol() + ", ";
+      ret += _args[i]-> value() + ", ";
     }
-    ret += _args[_args.size()-1]-> symbol() + ")";
-    return  ret;
+    ret += _args[_args.size()-1]-> value() + ")";
+    return ret;
   }
+
   bool match(Term &term){
     Struct * ps = dynamic_cast<Struct *>(&term);
     if (ps){
@@ -43,6 +44,7 @@ public:
     }
     return false;
   }
+
 private:
   Atom _name;
   std::vector<Term *> _args;

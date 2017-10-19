@@ -13,10 +13,10 @@ TEST(Variable, constructor){
 TEST(Variable , matching){
   Atom tom("tom");
   Variable X("X");
-  //X.match(tom);
-  //ASSERT_EQ( "tom", X.value());
+  X.match(tom);
+  ASSERT_EQ( "tom", X.value());
 }
-/*
+
 TEST (Variable , haveValue){
   Atom tom ("tom");
   Atom jerry ("jerry");
@@ -28,7 +28,7 @@ TEST (Variable , haveValue){
 // ?- X=2.7182.
 // X=2.7182
 TEST(Variable , numE_to_varX){
-  Nubmer e(2.7182);
+  Number e(2.7182);
   Variable X("X");
   ASSERT_TRUE(X.match(e));
   ASSERT_EQ("2.7182", X.value());
@@ -39,18 +39,18 @@ TEST(Variable , numE_to_varX){
 TEST (Variable, varY_to_varX_and_num1_to_varX) {
   Variable X("X");
   Variable Y("Y");
-  Nubmer e(1);
+  Number e(1);
   ASSERT_TRUE(X.match(Y));
   ASSERT_TRUE(X.match(e));
   ASSERT_EQ("1", Y.value());
 }
-  
+
 // ?- X=Y, Y=1.
 // X=1
 TEST (Variable, varY_to_varX_and_num1_to_varY) {
   Variable X("X");
   Variable Y("Y");
-  Nubmer e(1);
+  Number e(1);
   ASSERT_TRUE(X.match(Y));
   ASSERT_TRUE(Y.match(e));
   ASSERT_EQ("1", X.value());
@@ -60,7 +60,7 @@ TEST (Variable, varY_to_varX_and_num1_to_varY) {
 // X=1
 TEST (Variable, varX_match_varX_and_num1_to_varX) {
   Variable X("X");
-  Nubmer e(1);
+  Number e(1);
   ASSERT_TRUE(X.match(X));
   ASSERT_TRUE(X.match(e));
   ASSERT_EQ("1", X.value());
@@ -71,7 +71,7 @@ TEST (Variable, varX_match_varX_and_num1_to_varX) {
 TEST (Variable, num1_to_varY_and_varX_match_varY) {
   Variable X("X");
   Variable Y("Y");
-  Nubmer e(1);
+  Number e(1);
   ASSERT_TRUE(Y.match(e));
   ASSERT_TRUE(X.match(Y));
   ASSERT_EQ("1", X.value());
@@ -83,9 +83,12 @@ TEST (Variable, num1_to_varZ_to_varY_to_varX) {
   Variable X("X");
   Variable Y("Y");
   Variable Z("Z");
-  Nubmer e(1);
+  Number e(1);
   ASSERT_TRUE(X.match(Y));
   ASSERT_TRUE(Y.match(Z));
+  ASSERT_TRUE(Z.match(e));
+  ASSERT_EQ("1", X.value());
+  ASSERT_EQ("1", Y.value());
   ASSERT_EQ("1", Z.value());
 }
 
@@ -95,7 +98,7 @@ TEST (Variable, num1_to_varZ_to_varX_and_varY_to_varX) {
   Variable X("X");
   Variable Y("Y");
   Variable Z("Z");
-  Nubmer e(1);
+  Number e(1);
   ASSERT_TRUE(X.match(Y));
   ASSERT_TRUE(X.match(Z));
   ASSERT_TRUE(Z.match(e));
@@ -113,10 +116,10 @@ TEST (Variable, Struct1) {
   Variable X("X");
   Variable Y("Y");
   std::vector<Term *> v = {&X};
-  Struct s(Atom("tom"), v);
+  Struct s(Atom("s"), v);
   ASSERT_TRUE(Y.match(s));
   ASSERT_EQ("Y", Y.symbol());
-  //ASSERT_EQ("s(X)", Y.value());
+  ASSERT_EQ("s(X)", Y.value());
 }
 
 // Give there is a Struct s contains Variable X
@@ -126,8 +129,16 @@ TEST (Variable, Struct1) {
 // Then #symbol() of Y should return "Y"
 // And #value() of Y should return "s(teddy)"
 TEST (Variable, Struct2) {
-  
+  Variable X("X");
+  Variable Y("Y");
+  Atom teddy("teddy");
+  std::vector<Term *> v = {&X};
+  Struct s(Atom("s"), v);
+  ASSERT_TRUE(Y.match(s));
+  ASSERT_TRUE(X.match(teddy));
+  ASSERT_EQ("Y", Y.symbol());
+  ASSERT_EQ("s(teddy)", Y.value());
 }
-*/
+
 
 #endif
