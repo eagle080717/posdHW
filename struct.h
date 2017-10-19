@@ -21,12 +21,24 @@ public:
   }
 
   string const symbol(){
-    string ret =_name.symbol() + "(";
+    string ret = _name.symbol() + "(";
     for(int i = 0; i < _args.size() - 1 ; i++){
-      ret += _args[i]-> value() + ", ";
+      ret += _args[i]-> symbol() + ", ";
     }
-    ret += _args[_args.size()-1]-> value() + ")";
+    ret += _args[_args.size()-1]-> symbol() + ")";
     return ret;
+  }
+
+  string const value(){
+    if(!_args.empty()){
+      string ret =_name.symbol() + "(";
+      for(int i = 0; i < _args.size() - 1 ; i++){
+        ret += _args[i]-> value() + ", ";
+      }
+      ret += _args[_args.size()-1]-> value() + ")";
+      return ret;
+    } else 
+      return _name.symbol() + "(" + ")";  
   }
 
   bool match(Term &term){
