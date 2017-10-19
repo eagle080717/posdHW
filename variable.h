@@ -1,8 +1,9 @@
 #ifndef VARIABLE_H
 #define VARIABLE_H
 
+#include "term.h"
+
 #include <string>
-//#include "atom.h"
 using std::string;
 
 //class Atom;

@@ -28,7 +28,7 @@ ifeq (${OS}, Windows_NT)
 else
 	g++ -o hw3 main.o -lgtest -lpthread
 endif
-main.o:	number.h utTerm.h utStruct.h main.cpp 
+main.o:	number.h main.cpp 
 	g++ -std=gnu++0x -c main.cpp
 
 

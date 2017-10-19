@@ -1,31 +1,23 @@
 #ifndef NUMBER_H
 #define NUMBER_H
 
+#include "term.h"
+
 #include <string>
 using namespace std;
 
-class Atom;
-class Variable;
+//class Atom;
+//class Variable;
 class Number : public Term{
 public:
   Number(double v):_value(to_string(v)){}
-  string const _value;
-
-  string symbol(){ return _symbol; }
+  string symbol(){ return _value; }
   string value(){ return _value; }
-/*
-  bool match(Atom &at){
-    return false;
-  }
 
-  bool match(Number &n){
-    return n.value() == _value;
-  }
-*/
   bool match(Term &t){
     return t.value() == _value;
   }
-
+/*
   bool match(Variable &v){
     if(_assignable && v._assignable){
           v._value = _value;
@@ -36,11 +28,11 @@ public:
       }
     return v.symbol() == _symbol;
   }
-
-
+*/
+  
 private:
   string _symbol;
-  bool _assignable = true;
+  string const _value;
 };
 
 #endif
