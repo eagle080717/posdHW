@@ -20,7 +20,7 @@ else
 endif
 
 mainVariable.o: atom.h number.h variable.h struct.h utVariable.h mainVariable.cpp
-	g++ -std=gnu++0x -c mainAtom.cpp
+	g++ -std=gnu++0x -c mainVariable.cpp
 #################################################################################
 utStruct: mainStruct.o
 ifeq (${OS}, Windows_NT)
@@ -30,7 +30,7 @@ else
 endif
 
 mainStruct.o: atom.h number.h variable.h struct.h utStruct.h mainStruct.cpp
-	g++ -std=gnu++0x -c mainAtom.cpp
+	g++ -std=gnu++0x -c mainStruct.cpp
 #################################################################################
 hw4: main.o
 ifeq (${OS}, Windows_NT)
