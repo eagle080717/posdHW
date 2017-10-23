@@ -1,6 +1,6 @@
 #INC_DIR = include
 #################################################################################
-all: utAtom utStruct hw4
+all: utAtom utVariable utStruct hw4
 #################################################################################
 utAtom: mainAtom.o
 ifeq (${OS}, Windows_NT)
