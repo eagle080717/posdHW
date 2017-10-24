@@ -2,7 +2,7 @@
 #define NUMBER_H
 
 #include "term.h"
-
+#include "list.h"
 #include <string>
 using namespace std;
 
@@ -19,6 +19,9 @@ public:
 
   bool match(Term &t){
     return t.value() == _value;
+  }
+  bool match(List &l){
+    return false;
   }
 /*
   bool match(Variable &v){

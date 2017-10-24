@@ -2,7 +2,7 @@
 #define ATOM_H
 
 #include "term.h"
-
+#include "list.h"
 #include <string>
 using std::string;
 
@@ -17,6 +17,9 @@ public:
   }
   bool match(Term &t) {
     return t.symbol() == _symbol;
+  }
+  bool match(List &l){
+    return false;
   }
 private:
   string _symbol;

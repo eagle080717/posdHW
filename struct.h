@@ -2,6 +2,7 @@
 #define STRUCT_H
 
 #include "atom.h"
+#include "list.h"
 #include <vector>
 #include <string>
 
@@ -54,6 +55,10 @@ public:
       }
       return true;
     }
+    return false;
+  }
+
+  bool match(List &l){
     return false;
   }
 
