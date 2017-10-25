@@ -2,6 +2,7 @@
 #define UTLIST_H
 
 #include <string>
+#include <stdexcept>
 using std::string;
 
 #include "list.h"
@@ -127,6 +128,8 @@ TEST(List, matchToSameListWithDiffVarNameShouldSucceed) {
   vector<Term *> args2 = {&n1, &Y, &terence_tao};
   List l1(args);
   List l2(args2);
+  
+  ////////////////////////////
   //To do: matching var should TRUE
   //ASSERT_TRUE(l1.match(l2));
 }
@@ -151,10 +154,8 @@ TEST(List, headAndTailMatching1) {
   Atom f("first"), s("second"), t("third");
   vector<Term *> args = {&f, &s, &t};
   List l(args);
-
   EXPECT_EQ(string("first"), l.head()->symbol());
-  //BUG HERE
-  //EXPECT_EQ(string("[second, third]"), l.tail()->value());
+  EXPECT_EQ(string("[second, third]"), l.tail()->value());
 }
 
 // Example:
@@ -164,35 +165,60 @@ TEST(List, headAndTailMatching2) {
   Atom f("first"), s("second"), t("third");
   vector<Term *> args = {&f, &s, &t};
   List l(args);
-
-  //EXPECT_EQ(string("second"), l.tail()->head()->value());
-  //EXPECT_EQ(string("[third]"), l.tail()->tail()->value());
+  EXPECT_EQ(string("second"), l.tail()->head()->value());
+  EXPECT_EQ(string("[third]"), l.tail()->tail()->value());
 }
 
 // ?- [[first], second, third] = [H|T].
 // H = [first], T = [second, third].
 TEST(List, headAndTailMatching3) {
-
+  Atom f("first"), s("second"), t("third");
+  vector<Term *> args = {&f, &s, &t};
+  List l(args);
+  EXPECT_EQ(string("first"), l.head()->value());
+  EXPECT_EQ(string("[second, third]"), l.tail()->value());
 }
 
 // ?- [first, second, third] = [first, second, H|T].
 // H = third, T = [].
 TEST(List, headAndTailMatching4) {
-
+  Atom f("first"), s("second"), t("third");
+  vector<Term *> args = {&f, &s, &t};
+  List l(args);
+  EXPECT_EQ(string("third"), l.tail()->tail()->head()->value());
+  EXPECT_EQ(string("[]"), l.tail()->tail()->tail()->value());
 }
  
 // Given there is a empty list
 // When client still want to get the head of list
 // Then it should throw a string: "Accessing head in an empty list" as an exception.
 TEST (List, emptyExecptionOfHead) {
-
+  vector<Term *> args;
+  List l(args);
+  //EXPECT_THROW(l.head(), string);
+  try {
+    l.head();
+    FAIL();
+  }
+  catch(std::out_of_range const &err){
+    EXPECT_EQ(err.what(), string("Accessing head in an empty list"));
+  }
+  
 }
 
 // Given there is a empty list
-// When client still want to get the head of list
+// When client still want to get the tail of list
 // Then it should throw a string: "Accessing tail in an empty list" as an exception.
 TEST (List, emptyExecptionOfTail) {
-
+  vector<Term *> args;
+  List l(args);
+  try {
+    l.tail();
+    FAIL();
+  }
+  catch(std::out_of_range const &err){
+    EXPECT_EQ(err.what(), string("Accessing tail in an empty list"));
+  }
 }
 
 #endif
