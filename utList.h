@@ -128,23 +128,37 @@ TEST(List, matchToSameListWithDiffVarNameShouldSucceed) {
   vector<Term *> args2 = {&n1, &Y, &terence_tao};
   List l1(args);
   List l2(args2);
-  
-  ////////////////////////////
-  //To do: matching var should TRUE
-  //ASSERT_TRUE(l1.match(l2));
+
+  ASSERT_TRUE(l1.match(l2));
 }
 
 // ?- [496, X, terence_tao] = [496, 8128, terence_tao].
 // X = 8128.
 TEST(List, matchToVarToAtominListShouldSucceed) {
-
+  Number n1(496), n2(8128);
+  Variable X("X");
+  Atom terence_tao("terence_tao");
+  vector<Term *> args = {&n1, &X, &terence_tao};
+  List l1(args);
+  ASSERT_TRUE(X.match(n2));
+  vector<Term *> args2 = {&n1, &n2, &terence_tao};
+  List l2(args2);
+  ASSERT_TRUE(l1.match(l2));
 }
 
 // ?- Y = [496, X, terence_tao], X = alan_mathison_turing.
 // Y = [496, alan_mathison_turing, terence_tao],
 // X = alan_mathison_turing.
 TEST(List, matchVarinListToAtomShouldSucceed) {
-
+  Number n1(496);
+  Variable X("X"), Y("Y");
+  Atom alan_mathison_turing("alan_mathison_turing"), terence_tao("terence_tao");
+  vector<Term *> args = {&n1, &X, &terence_tao};
+  List l(args);
+  ASSERT_TRUE(Y.match(l));
+  ASSERT_TRUE(X.match(alan_mathison_turing));
+  ASSERT_EQ("[496, alan_mathison_turing, terence_tao]", l.value());
+  ASSERT_EQ("alan_mathison_turing", X.value());
 }
 
 // Example: 

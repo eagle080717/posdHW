@@ -13,7 +13,6 @@ public:
   //List (): _elements() {}
   List (vector<Term *> const &elements):_elements(elements){}
   string const symbol() {
-  	// To do: sorting the numbers
   	if(!_elements.empty()){
   		string str = "[";
   		for(auto iter=_elements.begin(); iter != _elements.end(); ++iter){
@@ -31,7 +30,6 @@ public:
   }
 
   string const value() {
-  	// To do: sorting the numbers
   	if(!_elements.empty()){
   		string str = "[";
   		for(auto iter=_elements.begin(); iter != _elements.end(); iter++){
@@ -48,15 +46,24 @@ public:
   }
   
   bool match(Term &term) {
-  	//Check whether is a list or not, if not, then return false, otherwise, comparing the list element
   	
   }
 
   bool match(List &l){
     if(l.value() == this->value())
       return true;
-    else
-      return false;
+    else {
+      if(l.ListSize() != _elements.size())
+        return false;
+      for(auto iter1=_elements.begin(), iter2=_elements.begin(); iter1 != _elements.end(); iter1++, iter2++){
+        if((*iter1)->symbol() != (*iter2)->symbol())
+          if((*iter1)->symbol() != (*iter2)->value())
+            if((*iter2)->symbol() != (*iter1)->value())
+              if((*iter2)->value() != (*iter1)->value())
+                return false;
+      }
+    }
+    return true;
   }
 
   Term *head() const {
@@ -76,6 +83,10 @@ public:
     }
 
     return new List(tmpVec);                                        
+  }
+
+  int ListSize() const {
+    return _elements.size();
   }
 
 private:
