@@ -10,7 +10,7 @@ using std::string;
 
 class List : public Term {
 public:
-  //List (): _elements() {}
+  List (): _elements() {}
   List (vector<Term *> const &elements):_elements(elements){}
   string const symbol() {
   	if(!_elements.empty()){
@@ -19,7 +19,6 @@ public:
   			str += (*iter)->symbol();
   			str += ", ";
   		}
-  		//str = str.substr(0, str.size()-2);
   		str.pop_back();
   		str.pop_back();
   		str += "]";
