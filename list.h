@@ -4,7 +4,6 @@
 #include "term.h"
 #include <string>
 #include <vector>
-#include <stdexcept>
 using std::vector;
 using std::string;
 
@@ -67,14 +66,13 @@ public:
 
   Term *head() const {
     if(_elements.empty())
-      //throw std::out_of_range("Accessing head in an empty list");
       throw string("Accessing head in an empty list");
   	return _elements.front();
   }
 
   List *tail() const {
     if(_elements.empty())
-      throw std::out_of_range("Accessing tail in an empty list");
+      throw string("Accessing tail in an empty list");
 
     vector<Term *> tmpVec;
     for(auto iter=_elements.begin()+1; iter != _elements.end(); iter++){
