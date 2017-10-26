@@ -67,8 +67,8 @@ public:
 
   Term *head() const {
     if(_elements.empty())
-      throw std::out_of_range("Accessing head in an empty list");
-
+      //throw std::out_of_range("Accessing head in an empty list");
+      throw string("Accessing head in an empty list");
   	return _elements.front();
   }
 

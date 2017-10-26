@@ -211,12 +211,18 @@ TEST (List, emptyExecptionOfHead) {
   vector<Term *> args;
   List l(args);
   //EXPECT_THROW(l.head(), string);
-  try {
+  /*try {
     l.head();
     FAIL();
   }
   catch(std::out_of_range const &err){
     EXPECT_EQ(err.what(), string("Accessing head in an empty list"));
+  }*/
+  try{
+    l.head();
+  }
+  catch(string str){
+    EXPECT_EQ(str, string("Accessing head in an empty list"));
   }
   
 }
