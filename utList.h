@@ -93,6 +93,7 @@ TEST(List, matchToVarShouldSucceed) {
   vector<Term *> args = {&n1, &X, &terence_tao};
   List l(args);
   ASSERT_TRUE(Y.match(l));
+  ASSERT_EQ(string("[496, X, terence_tao]"), Y.value());
 }
 
 // ?- X = [496, X, terence_tao].

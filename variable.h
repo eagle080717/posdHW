@@ -15,6 +15,8 @@ public:
       return _var->value();
     else if(_t != NULL)
       return _t->value();
+    else if(_l != NULL)
+      return _l->value();
     else
       return _value;
   }

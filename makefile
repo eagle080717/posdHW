@@ -1,36 +1,37 @@
 #INC_DIR = include
 #################################################################################
-all: utAtom utVariable utStruct hw4
+#all: utAtom utVariable utStruct hw4
+all: hw4
 #################################################################################
-utAtom: mainAtom.o
-ifeq (${OS}, Windows_NT)
-	g++ -o utAtom mainAtom.o -lgtest
-else
-	g++ -o utAtom mainAtom.o -lgtest -lpthread
-endif
+#utAtom: mainAtom.o
+#ifeq (${OS}, Windows_NT)
+#	g++ -o utAtom mainAtom.o -lgtest
+#else
+#	g++ -o utAtom mainAtom.o -lgtest -lpthread
+#endif
 
-mainAtom.o: atom.h utAtom.h mainAtom.cpp
-	g++ -std=gnu++0x -c mainAtom.cpp
+#mainAtom.o: atom.h utAtom.h mainAtom.cpp
+#	g++ -std=gnu++0x -c mainAtom.cpp
 #################################################################################
-utVariable: mainVariable.o
-ifeq (${OS}, Windows_NT)
-	g++ -o utVariable mainVariable.o -lgtest
-else
-	g++ -o utVariable mainVariable.o -lgtest -lpthread
-endif
+#utVariable: mainVariable.o
+#ifeq (${OS}, Windows_NT)
+#	g++ -o utVariable mainVariable.o -lgtest
+#else
+#	g++ -o utVariable mainVariable.o -lgtest -lpthread
+#endif
 
-mainVariable.o: atom.h number.h variable.h struct.h utVariable.h mainVariable.cpp
-	g++ -std=gnu++0x -c mainVariable.cpp
+#mainVariable.o: atom.h number.h variable.h struct.h utVariable.h mainVariable.cpp
+#	g++ -std=gnu++0x -c mainVariable.cpp
 #################################################################################
-utStruct: mainStruct.o
-ifeq (${OS}, Windows_NT)
-	g++ -o utStruct mainStruct.o -lgtest
-else
-	g++ -o utStruct mainStruct.o -lgtest -lpthread
-endif
+#utStruct: mainStruct.o
+#ifeq (${OS}, Windows_NT)
+#	g++ -o utStruct mainStruct.o -lgtest
+#else
+#	g++ -o utStruct mainStruct.o -lgtest -lpthread
+#endif
 
-mainStruct.o: atom.h number.h variable.h struct.h utStruct.h mainStruct.cpp
-	g++ -std=gnu++0x -c mainStruct.cpp
+#mainStruct.o: atom.h number.h variable.h struct.h utStruct.h mainStruct.cpp
+#	g++ -std=gnu++0x -c mainStruct.cpp
 #################################################################################
 hw4: main.o
 ifeq (${OS}, Windows_NT)
@@ -44,7 +45,9 @@ main.o:	atom.h number.h struct.h variable.h list.h utList.h main.cpp
 #################################################################################
 clean:
 ifeq (${OS}, Windows_NT)
-	del *.o *.exe utAtom utVariable utStruct hw4
+#	del *.o *.exe utAtom utVariable utStruct hw4
+	del *.o *.exe hw4
 else
-	rm -f *.o utAtom utVariable utStruct hw4
+#	rm -f *.o utAtom utVariable utStruct hw4
+	rm -f *.o hw4
 endif
