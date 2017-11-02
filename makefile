@@ -1,7 +1,7 @@
 #INC_DIR = include
 #################################################################################
 #all: utAtom utVariable utStruct hw4
-all: hw4
+all: hw5
 #################################################################################
 #utAtom: mainAtom.o
 #ifeq (${OS}, Windows_NT)
@@ -33,21 +33,21 @@ all: hw4
 #mainStruct.o: atom.h number.h variable.h struct.h utStruct.h mainStruct.cpp
 #	g++ -std=gnu++0x -c mainStruct.cpp
 #################################################################################
-hw4: main.o
+hw5: main.o
 ifeq (${OS}, Windows_NT)
-	g++ -o hw4 main.o -lgtest
+	g++ -o hw5 main.o -lgtest
 else
-	g++ -o hw4 main.o -lgtest -lpthread
+	g++ -o hw5 main.o -lgtest -lpthread
 endif
 
-main.o:	atom.h number.h struct.h variable.h list.h utList.h main.cpp
+main.o:	atom.h number.h struct.h variable.h list.h global.h scanner.h parser.h utParser.h main.cpp
 	g++ -std=gnu++0x -c main.cpp
 #################################################################################
 clean:
 ifeq (${OS}, Windows_NT)
 #	del *.o *.exe utAtom utVariable utStruct hw4
-	del *.o *.exe hw4
+	del *.o *.exe hw5
 else
 #	rm -f *.o utAtom utVariable utStruct hw4
-	rm -f *.o hw4
+	rm -f *.o hw5
 endif

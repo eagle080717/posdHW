@@ -13,8 +13,10 @@ class Struct : public Term
 public:
   Struct(Atom name, std::vector<Term *> args):_name(name), _args(args) {}
 
-  Term * args(int index) {
-    return _args[index];
+  int arity();
+
+  Term &args(int index) {
+    return *_args[index];
   }
 
   Atom name() {

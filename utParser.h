@@ -56,7 +56,9 @@ TEST_F(ParserTest, createTerms)
 // When parser parses all terms via scanner.
 // Then it should return two terms, one is "12345", another is "tom".
 TEST_F(ParserTest, listOfTermsTwo) {
-
+  Scanner scanner(" 12345,  tom");
+  Parser parser(scanner);
+  ASSERT_EQ("[12345, tom]", parser.createTerm()->symbol());
 }
 
 

@@ -4,7 +4,9 @@
 using std::string;
 
 #include "atom.h"
+#include "number.h"
 #include "variable.h"
+#include "list.h"
 #include "global.h"
 #include "scanner.h"
 #include "struct.h"
@@ -20,10 +22,16 @@ public:
       return new Number(_scanner.tokenValue());
     }else if(token == ATOM){
         Atom* atom = new Atom(symtable[_scanner.tokenValue()].first);
+
         if(_scanner.nextToken() == '(') {
           vector<Term*> terms = getArgs();
-          if(_currentToken == ')')
-            return new Struct(*atom, terms);
+          //if(_currentToken == ')'){
+          return new Struct(*atom, terms);
+          //}
+        }
+        else if(_scanner.nextToken() == ','){
+          vector<Term*> terms = getArgs();
+          return new List(getArgs());
         }
         else
           return atom;
@@ -42,9 +50,18 @@ public:
     }
     return args;
   }
-
-
-
+/*
+  List getArgsForList()
+  {
+    Term* term = createTerm();
+    if(term)
+      args.push_back(term);
+    while((_currentToken = _scanner.nextToken()) == ',') {
+      args.push_back(createTerm());
+    }
+    return args;
+  }
+*/
 private:
   Scanner _scanner;
   int _currentToken;
