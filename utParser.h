@@ -7,6 +7,7 @@
 #include "list.h"
 #include "variable.h"
 #include "number.h"
+#include "struct.h"
 
 class ParserTest : public ::testing::Test {
 protected:
@@ -58,7 +59,9 @@ TEST_F(ParserTest, createTerms)
 TEST_F(ParserTest, listOfTermsTwo) {
   Scanner scanner(" 12345,  tom");
   Parser parser(scanner);
-  ASSERT_EQ("[12345, tom]", parser.createTerm()->symbol());
+  vector<Term*> terms = parser.getArgs();
+  ASSERT_EQ("12345", terms[0]->symbol());
+  ASSERT_EQ("tom", terms[1]->symbol());
 }
 
 
@@ -67,7 +70,10 @@ TEST_F(ParserTest, listOfTermsTwo) {
 // Then it should return a Struct.
 // And #symbol() of Strcut should return "point(1, X, z(1,2,3))".
 TEST_F(ParserTest, parseStructOfStruct) {
-
+  Scanner scanner("point(1, X, z(1,2,3))");
+  Parser parser(scanner);
+  Struct *s = dynamic_cast<Struct *>(parser.createTerm());
+  ASSERT_EQ("point(1, X, z(1, 2, 3))", s->symbol());
 }
 
 
@@ -75,7 +81,11 @@ TEST_F(ParserTest, parseStructOfStruct) {
 // When parser parses all terms via scanner.
 // Then it should return two terms, one is "12345", another is "67".
 TEST_F(ParserTest, listOfTermsTwoNumbers) {
-
+  Scanner scanner(" 12345,  67");
+  Parser parser(scanner);
+  vector<Term*> terms = parser.getArgs();
+  ASSERT_EQ("12345", terms[0]->symbol());
+  ASSERT_EQ("67", terms[1]->symbol());
 }
 
 
@@ -84,7 +94,10 @@ TEST_F(ParserTest, listOfTermsTwoNumbers) {
 // Then it should return a Struct.
 // And #symbol() of Strcut should return "point(1, X, z)".
 TEST_F(ParserTest, parseStructThreeArgs) {
-
+  Scanner scanner("point(1, X, z)");
+  Parser parser(scanner);
+  Struct *s = dynamic_cast<Struct *>(parser.createTerm());
+  ASSERT_EQ("point(1, X, z)", s->symbol());
 }
 
 
@@ -93,7 +106,12 @@ TEST_F(ParserTest, parseStructThreeArgs) {
 // Then it should return a List.
 // And #symbol() of List should return "[]".
 TEST_F(ParserTest, parseListEmpty) {
-
+  Scanner scanner("   [   ]");
+  Parser parser(scanner);
+  vector<Term*> terms = parser.getArgs();
+  List *l = dynamic_cast<List *>(terms[0]);
+  //ASSERT_EQ("12345", terms[0]->symbol());
+  ASSERT_EQ("[]", l->symbol());
 }
 
 
@@ -160,7 +178,7 @@ TEST_F(ParserTest, illegal1) {
 // Then it should return a Struct which contains two terms.
 // And #arity() of the Struct should be 2.
 // And #symbol() of Struct should return ".(1, [])".
-// And the first term should be number: "1", the second term should be another Strcut: "[]".
+// And the first term should be number: "1", the second term should be another List: "[]".
 TEST_F(ParserTest, ListAsStruct) {
 
 }

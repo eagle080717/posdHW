@@ -19,7 +19,8 @@ public:
     if(token == VAR){
       return new Variable(symtable[_scanner.tokenValue()].first);
     }else if(token == NUMBER){
-      return new Number(_scanner.tokenValue());
+        return new Number(_scanner.tokenValue());
+      //return new Number(_scanner.tokenValue());
     }else if(token == ATOM){
         Atom* atom = new Atom(symtable[_scanner.tokenValue()].first);
 
@@ -28,10 +29,6 @@ public:
           //if(_currentToken == ')'){
           return new Struct(*atom, terms);
           //}
-        }
-        else if(_scanner.nextToken() == ','){
-          vector<Term*> terms = getArgs();
-          return new List(getArgs());
         }
         else
           return atom;
@@ -50,18 +47,7 @@ public:
     }
     return args;
   }
-/*
-  List getArgsForList()
-  {
-    Term* term = createTerm();
-    if(term)
-      args.push_back(term);
-    while((_currentToken = _scanner.nextToken()) == ',') {
-      args.push_back(createTerm());
-    }
-    return args;
-  }
-*/
+
 private:
   Scanner _scanner;
   int _currentToken;
