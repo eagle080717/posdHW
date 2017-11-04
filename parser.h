@@ -18,20 +18,45 @@ public:
     int token = _scanner.nextToken();
     if(token == VAR){
       return new Variable(symtable[_scanner.tokenValue()].first);
-    }else if(token == NUMBER){
+    } else if(token == NUMBER){
         return new Number(_scanner.tokenValue());
-      //return new Number(_scanner.tokenValue());
-    }else if(token == ATOM){
+    } else if(token == ATOM || token == ATOMSC){
         Atom* atom = new Atom(symtable[_scanner.tokenValue()].first);
+        vector<Term*> terms = {};
 
-        if(_scanner.nextToken() == '(') {
-          vector<Term*> terms = getArgs();
-          //if(_currentToken == ')'){
-          return new Struct(*atom, terms);
-          //}
+        switch(_scanner.currentChar()) {
+          case '(': _scanner.extractChar();
+                    _scanner.skipLeadingWhiteSpace();
+                    if(_scanner.currentChar() == ')'){
+                      _scanner.nextToken();
+                      return new Struct(*atom, terms);
+                    }
+                    else {
+                      terms = getArgs();                    
+                      if(_currentToken == ')')
+                        return new Struct(*atom, terms);
+                      throw std::string("unexpected token");
+                    }   
+                    break;
+
+          case '[': _scanner.extractChar();
+                    _scanner.skipLeadingWhiteSpace();            
+                    if(_scanner.currentChar() == ']'){
+                      _scanner.nextToken();
+                      return new List;
+                    }                  
+                    else {
+                      terms = getArgs();
+                      if(_currentToken == ']')
+                        return new List(terms);
+                      throw std::string("unexpected token");                 
+                    }
+                    break;
+
+          default:  return atom;
+                    break;
         }
-        else
-          return atom;
+        
     }
     return NULL;
   }
@@ -39,7 +64,7 @@ public:
   vector<Term*> getArgs()
   {
     Term* term = createTerm();
-    vector<Term*> args;
+    vector<Term*> args = {};
     if(term)
       args.push_back(term);
     while((_currentToken = _scanner.nextToken()) == ',') {

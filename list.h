@@ -87,7 +87,7 @@ public:
   }
 
 private:
-  vector<Term *> _elements;
+  vector<Term *> _elements = {};
 };
 
 #endif

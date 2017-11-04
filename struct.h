@@ -13,10 +13,12 @@ class Struct : public Term
 public:
   Struct(Atom name, std::vector<Term *> args):_name(name), _args(args) {}
 
-  int arity();
-
   Term *args(int index) {
     return _args[index];
+  }
+
+  int arity() {
+    return _args.size();
   }
 
   Atom name() {
@@ -24,6 +26,8 @@ public:
   }
 
   string const symbol(){
+    if(_args.empty())
+      return _name.symbol() + "(" + ")";  
     string ret = _name.symbol() + "(";
     for(int i = 0; i < _args.size() - 1 ; i++){
       ret += _args[i]-> symbol() + ", ";
