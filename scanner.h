@@ -24,7 +24,7 @@ public:
         string s = extractAtom();
         processToken<ATOM>(s);
         return ATOM;
-      } else if (isSpecialCh(currentChar()) || currentChar() == '[') {
+      } else if (isSpecialCh(currentChar())) {
         string s = extractAtomSC();
         processToken<ATOMSC>(s);
         return ATOMSC;

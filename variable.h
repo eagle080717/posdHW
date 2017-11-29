@@ -22,24 +22,52 @@ public:
   }
 
   bool match(Term &t){
+
+    Variable *v = dynamic_cast<Variable *>(&t);
     if(_assignable){
       if(_var != NULL){
         _var->match(t);
         return _var->value() == t.value();
       }
-      else {
+      if(_t != NULL) {
+        _t->match(t);
         _t = &t;
-        _assignable = false;
       }
+
+      else {
+        //std::cout << "3333333333 " << t.symbol() << std::endl;
+        if(v){
+            _t = &t;
+          //v->match(*this);
+          //v->_var = *this;
+        } else{
+          _t = &t;
+          _assignable = false;
+        }
+
+        
+      }
+    }
+    else if(_t){
+        t.match(*_t);
     }
     return _t->value() == t.value();
   }
 
   bool match(Variable &v){
-    if(v.symbol() == _symbol)
+
+    if(v.value() == _value && _t != NULL)
       return true;
+
     if(_var == NULL){
-      _var = &v;
+      if(_t != NULL){
+        v.match(*_t);
+      }
+      else{
+        
+        _var = &v;
+        //v.match(*this);    
+      }
     } else {
       _var->match(v);
     }
@@ -59,6 +87,11 @@ public:
     return _l->value() == l.value();
   }
 
+  bool assigned(){
+    return _assignable;
+  }
+
+  
 private:
   string const _symbol;
   string _value;

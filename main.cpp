@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <iostream>
 #include "utParser.h"
 
 int main( int argc , char **argv )

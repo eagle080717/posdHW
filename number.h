@@ -3,6 +3,7 @@
 
 #include "term.h"
 #include "list.h"
+#include "variable.h"
 #include <string>
 using namespace std;
 
@@ -23,18 +24,11 @@ public:
   bool match(List &l){
     return false;
   }
-/*
+
   bool match(Variable &v){
-    if(_assignable && v._assignable){
-          v._value = _value;
-          v._assignable = false;
-          
-          _symbol = v.symbol();
-          _assignable = false;       
-      }
-    return v.symbol() == _symbol;
+    return v.match(*this);
   }
-*/
+
   
 private:
   //string _symbol;

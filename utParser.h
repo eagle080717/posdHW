@@ -5,6 +5,7 @@
 
 #include "parser.h"
 #include "scanner.h"
+//#include "node.h"
 
 class ParserTest : public ::testing::Test {
 protected:
@@ -206,7 +207,7 @@ TEST_F(ParserTest, OneMatching) {
   EXPECT_EQ("1", terms[1]->symbol());
   EXPECT_NE("1", terms[0]->value());
 
-  Node * et = parser.expressionTree();
+  Node *et = parser.expressionTree();
   EXPECT_EQ(EQUALITY, et->payload);
 
   EXPECT_TRUE(et->evaluate());
@@ -237,7 +238,7 @@ TEST_F(ParserTest, TwoTermsMatching) {
   EXPECT_EQ("Y", terms[2]->symbol());
   EXPECT_EQ("2", terms[3]->symbol());
 
-  Node * et = parser.expressionTree();
+  Node *et = parser.expressionTree();
   EXPECT_TRUE(et->evaluate());
   EXPECT_EQ(COMMA, et->payload);
 
@@ -283,7 +284,6 @@ TEST_F(ParserTest, TwoVariableMatching2) {
 
   Node * et = parser.expressionTree();
   EXPECT_TRUE(et->evaluate());
-
   EXPECT_EQ("1", terms[0]->value());
   EXPECT_EQ("1", terms[2]->value());
 }
