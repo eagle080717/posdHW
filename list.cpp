@@ -1,5 +1,6 @@
 #include "atom.h"
 #include "variable.h"
+#include "iterator.h"
 #include <typeinfo>
 #include <iostream>
 #include <string>
@@ -85,3 +86,8 @@ List * List::tail() const {
     List *ls= new List(_clone_elements) ;
     return ls;
 }
+Iterator *List::createIterator()
+{
+  return new ListIterator(this);
+}
+
