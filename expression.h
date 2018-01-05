@@ -70,7 +70,7 @@ TEST(Shell, varMatchItself) {
   }
 }
 
-/*
+//fail
 TEST(Shell, varMachingListThatIncludeVar) {
   Scanner s("X=[Y,tom], Y=marry.");
   Parser p(s);
@@ -82,7 +82,7 @@ TEST(Shell, varMachingListThatIncludeVar) {
     FAIL() << msg;
   }
 }
-
+//fail
 TEST(Shell, varMachingStructThatIncludeVar) {
   Scanner s("X=s(Y,marry), Y=tom.");
   Parser p(s);
@@ -95,8 +95,7 @@ TEST(Shell, varMachingStructThatIncludeVar) {
   }
 }
 
-*/
-/*
+//fail
 TEST(Shell, conjunctionMatching_false) {
   Scanner s("X=1, X=2.");
   Parser p(s);
@@ -108,7 +107,7 @@ TEST(Shell, conjunctionMatching_false) {
     FAIL() << msg;
   }
 }
-*/
+
 
 TEST(Shell, conjunctionMatching_diffExp) {
   Scanner s("X=1, Y=2.");
@@ -230,7 +229,7 @@ TEST(Shell, disjunctionMatching1) {
     FAIL() << msg;
   }
 }
-
+//fail
 TEST(Shell, disjunctionMatching2) {
   Scanner s("X=1; X=1, X=2.");
   Parser p(s);
@@ -278,7 +277,8 @@ TEST(Shell, disjunctionMatching5) {
     FAIL() << msg;
   }
 }
-/*
+
+//fail
 TEST(Shell, disjunctionMatching6) {
   Scanner s("X=1; X=1, X=2; Z=3.");
   Parser p(s);
@@ -290,7 +290,7 @@ TEST(Shell, disjunctionMatching6) {
     FAIL() << msg;
   }
 }
-*/
+
 
 TEST(Shell, exceptionMissingPeriodToken1) {
   Scanner s("X=1");
