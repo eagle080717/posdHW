@@ -9,12 +9,14 @@ using std::string;
 #include "scanner.h"
 #include "struct.h"
 #include "list.h"
+#include "exp.h"
+#include <stack>
 
-#include "utParser.h"
+using std::stack;
 
 class Parser{
 public:
-  Parser(Scanner scanner) : _scanner(scanner), _terms(){}
+  Parser(Scanner scanner) : _scanner(scanner), _terms() {}
 
   Term* createTerm(){
     int token = _scanner.nextToken();
@@ -50,7 +52,10 @@ public:
       vector<Term *> args(_terms.begin() + startIndexOfStructArgs, _terms.end());
       _terms.erase(_terms.begin() + startIndexOfStructArgs, _terms.end());
       return new Struct(structName, args);
-    } else {
+    } else if(_currentToken == ';'){
+      throw string("Unbalanced operator");
+    }
+    else {
       throw string("unexpected token");
     }
   }
@@ -62,8 +67,14 @@ public:
     {
       vector<Term *> args(_terms.begin() + startIndexOfListArgs, _terms.end());
       _terms.erase(_terms.begin() + startIndexOfListArgs, _terms.end());
+      if(args.size()==0){
+        return new Atom("[]");
+      }
       return new List(args);
-    } else {
+    } else if(_currentToken == ';'){
+      throw string("Unbalanced operator");
+    }
+    else {
       throw string("unexpected token");
     }
   }
@@ -72,11 +83,77 @@ public:
     return _terms;
   }
 
+  void buildExpression(){
+    // createTerm();
+    _scanner.exceptionCheck();
+    disjunctionMatch();
+    restDisjunctionMatch();
+    if (createTerm() != nullptr || _currentToken != '.'){
+      if(!_scanner.findEnd())
+        throw string("Missing token '.'");
+    }
+  }
+
+  void restDisjunctionMatch() {
+    if (_scanner.currentChar() == ';') {
+      createTerm();
+      disjunctionMatch();
+      Exp *right = _expStack.top();
+      _expStack.pop();
+      Exp *left = _expStack.top();
+      _expStack.pop();
+      _expStack.push(new DisjExp(left, right));
+      restDisjunctionMatch();
+    }
+  }
+
+  void disjunctionMatch() {
+    conjunctionMatch();
+    restConjunctionMatch();
+  }
+
+  void restConjunctionMatch() {
+    if (_scanner.currentChar() == ',') {
+      createTerm();
+      conjunctionMatch();
+      Exp *right = _expStack.top();
+      _expStack.pop();
+      Exp *left = _expStack.top();
+      _expStack.pop();
+      _expStack.push(new ConjExp(left, right));
+      restConjunctionMatch();
+    }
+  }
+
+  void conjunctionMatch() {
+    Term * left = createTerm();
+    if (createTerm() == nullptr && _currentToken == '=') {
+      Term * right = createTerm();
+      _expStack.push(new MatchExp(left, right));
+    } else {
+      string exception = left->symbol();
+      exception += " does never get assignment";
+      throw exception;
+    }
+
+  }
+
+  Exp* getExpressionTree(){
+    return _expStack.top();
+  }
+
+  string express(){
+    string result = _expStack.top()->getExpress();
+    result += '.';
+    return result;
+  }
+
 private:
   FRIEND_TEST(ParserTest, createArgs);
   FRIEND_TEST(ParserTest,ListOfTermsEmpty);
   FRIEND_TEST(ParserTest,listofTermsTwoNumber);
   FRIEND_TEST(ParserTest, createTerm_nestedStruct3);
+  FRIEND_TEST(ParserTest, createTerms);
 
   void createTerms() {
     Term* term = createTerm();
@@ -92,5 +169,7 @@ private:
   vector<Term *> _terms;
   Scanner _scanner;
   int _currentToken;
+  //MatchExp* _root;
+  stack<Exp*> _expStack;
 };
 #endif
