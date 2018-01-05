@@ -230,7 +230,7 @@ TEST(Shell, disjunctionMatching1) {
     FAIL() << msg;
   }
 }
-/*
+
 TEST(Shell, disjunctionMatching2) {
   Scanner s("X=1; X=1, X=2.");
   Parser p(s);
@@ -242,7 +242,7 @@ TEST(Shell, disjunctionMatching2) {
     FAIL() << msg;
   }
 }
-*/
+
 TEST(Shell, disjunctionMatching3) {
   Scanner s("X=1; X=1, Y=2.");
   Parser p(s);

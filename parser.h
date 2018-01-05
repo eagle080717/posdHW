@@ -149,13 +149,6 @@ public:
   }
 
 private:
-  /*
-  FRIEND_TEST(ParserTest, createArgs);
-  FRIEND_TEST(ParserTest,ListOfTermsEmpty);
-  FRIEND_TEST(ParserTest,listofTermsTwoNumber);
-  FRIEND_TEST(ParserTest, createTerm_nestedStruct3);
-  FRIEND_TEST(ParserTest, createTerms);
-  */
   void createTerms() {
     Term* term = createTerm();
     if(term!=nullptr)
@@ -170,7 +163,6 @@ private:
   vector<Term *> _terms;
   Scanner _scanner;
   int _currentToken;
-  //MatchExp* _root;
   stack<Exp*> _expStack;
 };
 #endif
