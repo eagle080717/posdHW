@@ -14,6 +14,20 @@ public:
   Scanner (string in=""):buffer(in), pos(0), _tokenValue(NONE){}
   void setInput(string in) {buffer = in;}
 
+  void exceptionCheck() {
+    if(buffer.find(";.") != string::npos)
+      throw string("Unexpected ';' before '.'");
+    if(buffer.find(",.") != string::npos)
+      throw string("Unexpected ',' before '.'");
+  }
+
+  bool findEnd() {
+    if(buffer.find(".") != string::npos)
+      return true;
+    else
+      return false;
+  }
+
   int nextToken() {
       if (skipLeadingWhiteSpace() >= buffer.length())
         return EOS;
@@ -24,7 +38,7 @@ public:
         string s = extractAtom();
         processToken<ATOM>(s);
         return ATOM;
-      } else if (isSpecialCh(currentChar())) {
+      } else if (isSpecialCh(currentChar()) && position() < buffer.length() - 1) {
         string s = extractAtomSC();
         processToken<ATOMSC>(s);
         return ATOMSC;
@@ -49,6 +63,14 @@ public:
 
   char currentChar() {
     return buffer[pos];
+  }
+
+  char nextChar() {
+    return buffer[pos+1];
+  }
+
+  char prevChar() {
+    return buffer[pos-1];
   }
 
   // extractX: extract X and set position right after X
